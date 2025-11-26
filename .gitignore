@@ -1,0 +1,16 @@
+# Dependencies
+vendor/
+
+# Environment / secrets
+.env
+.env.local
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.log
+/.idea/
+/.vscode/
+
+# Composer cache artifacts
+composer.lock
