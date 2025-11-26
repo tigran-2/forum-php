@@ -53,7 +53,10 @@ $f = flash();
       <div class="right">
         <?php if ($u): ?>
           <span class="pill">Вы: <?= e($u['first_name'] . ' ' . $u['last_name']) ?></span>
-          <a class="btn" href="/logout.php">Выйти</a>
+          <form action="/logout.php" method="post" style="margin:0;">
+            <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
+            <button class="btn" type="submit">Выйти</button>
+          </form>
         <?php else: ?>
           <a class="btn" href="/login.php">Войти</a>
           <a class="btn primary" href="/register.php">Регистрация</a>

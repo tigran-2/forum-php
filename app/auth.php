@@ -79,6 +79,13 @@ function auth_login(string $email, string $password): array {
         return ['ok' => false, 'error' => 'Неверный email или пароль.'];
     }
 
+    // Upgrade hash if algorithm/options changed.
+    if (password_needs_rehash($user['password_hash'], PASSWORD_DEFAULT)) {
+        $newHash = password_hash($password, PASSWORD_DEFAULT);
+        $pdo->prepare('UPDATE users SET password_hash = ? WHERE id = ?')->execute([$newHash, $user['id']]);
+        $user['password_hash'] = $newHash;
+    }
+
     // Minimal protection against session fixation.
     session_regenerate_id(true);
 

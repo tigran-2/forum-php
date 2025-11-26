@@ -48,13 +48,17 @@ function csrf_check(): void {
 }
 
 function normalize_phone(string $phone): string {
-    // Keep the value as-is (strict format), but trim whitespace.
+    // Canonicalize to +374XXXXXXXX format (digits only after country code).
+    $digits = preg_replace('/\D+/', '', $phone ?? '');
+    if (strpos($digits, '374') === 0 && strlen($digits) === 11) {
+        return '+'.$digits;
+    }
     return trim($phone);
 }
 
 function validate_phone_am(string $phone): bool {
-    // Формат: +374 00 000 000
-    return (bool)preg_match('/^\+374\s\d{2}\s\d{3}\s\d{3}$/', $phone);
+    // Формат: +374 00 000 000 (or canonical +374XXXXXXXX).
+    return (bool)preg_match('/^\+374\s?\d{2}\s?\d{3}\s?\d{3}$/', $phone);
 }
 
 function validate_name(string $name): bool {
