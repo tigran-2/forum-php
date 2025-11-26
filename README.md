@@ -17,18 +17,31 @@
 - PDO MySQL extension enabled
 
 ## Setup
-1) Create a database, e.g. `forum_db`.
-2) Import the schema:
-   - Open `database/schema.sql` and run it in MySQL.
-3) Configure DB credentials in `config/config.php`.
-4) Start a local server from the `public` folder:
 
-   **Option A (PHP built-in server):**
+### Quick start with Docker Compose
+1) Copy `.env` and adjust if needed:
+   ```bash
+   cp .env .env.local && nano .env.local
+   ```
+2) Start the stack (PHP-FPM + Nginx + MySQL 8.3):
+   ```bash
+   docker compose --env-file .env.local up --build
+   ```
+3) Open http://localhost:8080 (Nginx serves `public/`).
+
+Notes:
+- `database/schema.sql` is auto-loaded on first MySQL start.
+- Source is bind-mounted; edit locally and refresh.
+
+### Manual (no Docker)
+1) Create a database, e.g. `forum_db`.
+2) Import `database/schema.sql` in MySQL.
+3) Configure DB credentials in `config/config.php`.
+4) Start a local server from `public`:
    ```bash
    cd public
    php -S localhost:8000
    ```
-
    Open: http://localhost:8000
 
 ## Structure
