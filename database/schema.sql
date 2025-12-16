@@ -9,7 +9,9 @@ CREATE TABLE IF NOT EXISTS users (
   dob DATE NOT NULL,
   phone VARCHAR(32) NOT NULL,
   password_hash VARCHAR(255) NOT NULL,
+  avatar_url VARCHAR(255) DEFAULT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -19,8 +21,11 @@ CREATE TABLE IF NOT EXISTS topics (
   title VARCHAR(255) NOT NULL,
   body TEXT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  INDEX (user_id),
+  INDEX idx_topics_user (user_id),
+  INDEX idx_topics_created (created_at),
+  FULLTEXT INDEX idx_topics_search (title, body),
   CONSTRAINT fk_topics_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -30,9 +35,11 @@ CREATE TABLE IF NOT EXISTS comments (
   user_id INT UNSIGNED NOT NULL,
   body TEXT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  INDEX (topic_id),
-  INDEX (user_id),
+  INDEX idx_comments_topic (topic_id),
+  INDEX idx_comments_user (user_id),
+  INDEX idx_comments_created (topic_id, created_at),
   CONSTRAINT fk_comments_topic FOREIGN KEY (topic_id) REFERENCES topics(id) ON DELETE CASCADE,
   CONSTRAINT fk_comments_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
