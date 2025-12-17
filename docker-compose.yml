@@ -5,8 +5,12 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./.env
+    environment:
+      - DB_HOST=mysql
+      - DB_PASS=${DB_PASS:-root}
     volumes:
       - ./:/var/www
+      - /var/www/vendor
     depends_on:
       - mysql
 
@@ -21,9 +25,15 @@ services:
       - php
 
   mysql:
-    image: mysql:8.3-oracle
+    image: mysql:8.3
     env_file:
       - ./.env
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:-forum_db}
+      MYSQL_ROOT_PASSWORD: ${DB_PASS:-root}
+      # If you want a non-root user, uncomment:
+      # MYSQL_USER: ${DB_USER}
+      # MYSQL_PASSWORD: ${DB_PASS}
     volumes:
       - dbdata:/var/lib/mysql
       - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
