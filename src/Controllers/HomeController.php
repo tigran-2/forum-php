@@ -15,6 +15,12 @@ class HomeController
     /**
      * Show home page with topic list.
      */
+    /**
+     * Show home page with topic list.
+     * 
+     * Handles pagination and search functionality.
+     * GET params: page (int), q (string).
+     */
     public function index(): void
     {
         $page = Validator::getInt($_GET['page'] ?? 1, 1, 1, 1000);

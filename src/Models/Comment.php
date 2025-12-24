@@ -16,6 +16,14 @@ class Comment
     /**
      * Get paginated comments for a topic.
      */
+    /**
+     * Get paginated comments for a topic.
+     * 
+     * @param int $topicId Topic ID
+     * @param int $page Current page
+     * @param int $perPage Items per page
+     * @return array Pagination result
+     */
     public static function paginate(int $topicId, int $page = 1, int $perPage = self::PER_PAGE): array
     {
         $pdo = Database::getInstance();
@@ -50,6 +58,12 @@ class Comment
 
     /**
      * Get all comments for a topic (without pagination).
+     */
+    /**
+     * Get all comments for a topic (without pagination).
+     * 
+     * @param int $topicId Topic ID
+     * @return array List of comments
      */
     public static function forTopic(int $topicId): array
     {
@@ -87,6 +101,14 @@ class Comment
 
     /**
      * Create a new comment.
+     */
+    /**
+     * Create a new comment.
+     * 
+     * @param int $userId Author ID
+     * @param int $topicId Topic ID
+     * @param string $body Comment content
+     * @return array Result ['ok' => bool, 'id' => int, 'errors' => array]
      */
     public static function create(int $userId, int $topicId, string $body): array
     {

@@ -21,6 +21,11 @@ class TopicController
     /**
      * Show a single topic with comments.
      */
+    /**
+     * Show a single topic with comments.
+     * 
+     * @param string $id Topic ID
+     */
     public function show(string $id): void
     {
         $topicId = Validator::getInt($id, 0, 1);
@@ -52,6 +57,11 @@ class TopicController
 
     /**
      * Add a comment to a topic.
+     */
+    /**
+     * Add a comment to a topic.
+     * 
+     * @param string $id Topic ID
      */
     public function addComment(string $id): void
     {
@@ -124,6 +134,11 @@ class TopicController
     /**
      * Store a new topic.
      */
+    /**
+     * Store a new topic.
+     * 
+     * Validates input and creates topic in database.
+     */
     public function store(): void
     {
         if (!is_post()) {
@@ -167,6 +182,12 @@ class TopicController
     /**
      * Show edit topic form.
      */
+    /**
+     * Show edit topic form.
+     * 
+     * Ensures user is the owner of the topic.
+     * @param string $id Topic ID
+     */
     public function edit(string $id): void
     {
         $topicId = Validator::getInt($id, 0, 1);
@@ -194,6 +215,11 @@ class TopicController
 
     /**
      * Update a topic.
+     */
+    /**
+     * Update a topic.
+     * 
+     * @param string $id Topic ID
      */
     public function update(string $id): void
     {
@@ -246,6 +272,11 @@ class TopicController
 
     /**
      * Delete a topic.
+     */
+    /**
+     * Delete a topic.
+     * 
+     * @param string $id Topic ID
      */
     public function delete(string $id): void
     {

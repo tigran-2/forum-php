@@ -2,6 +2,13 @@
 declare(strict_types=1);
 
 use function App\Core\e;
+
+/**
+ * @var array $profile User profile data
+ * @var bool $is_owner Is current user the owner
+ * @var int $topic_count
+ * @var int $comment_count
+ */
 ?>
 <div class="grid">
   <div class="card">

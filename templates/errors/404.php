@@ -1,5 +1,9 @@
 <?php
 declare(strict_types=1);
+
+/**
+ * @var string $title Page title
+ */
 ?>
 <div class="grid">
   <div class="card text-center">

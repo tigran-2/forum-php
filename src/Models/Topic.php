@@ -16,6 +16,14 @@ class Topic
     /**
      * Get paginated topics with optional search.
      */
+    /**
+     * Get paginated topics with optional search.
+     * 
+     * @param int $page Current page number
+     * @param int $perPage Items per page
+     * @param string|null $search Search term for title/body
+     * @return array Pagination result ['items' => [], 'total' => int, ...]
+     */
     public static function paginate(int $page = 1, int $perPage = self::PER_PAGE, ?string $search = null): array
     {
         $pdo = Database::getInstance();
@@ -81,6 +89,16 @@ class Topic
     /**
      * Create a new topic.
      */
+    /**
+     * Create a new topic.
+     * 
+     * Validates title and body length.
+     * 
+     * @param int $userId Author ID
+     * @param string $title Topic title
+     * @param string $body Topic content
+     * @return array Result ['ok' => bool, 'id' => int, 'errors' => array]
+     */
     public static function create(int $userId, string $title, string $body): array
     {
         $title = trim($title);
@@ -106,6 +124,14 @@ class Topic
 
     /**
      * Update a topic.
+     */
+    /**
+     * Update a topic.
+     * 
+     * @param int $id Topic ID
+     * @param string $title New title
+     * @param string $body New content
+     * @return array Result ['ok' => bool, 'errors' => array]
      */
     public static function update(int $id, string $title, string $body): array
     {

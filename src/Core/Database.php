@@ -11,10 +11,18 @@ use PDOException;
  */
 class Database
 {
+    /** @var PDO|null The PDO instance */
     private static ?PDO $instance = null;
 
     private function __construct() {}
 
+    /**
+     * Get the PDO database connection.
+     * Creates a new connection if one doesn't exist.
+     * 
+     * @return PDO
+     * @throws PDOException If connection fails
+     */
     public static function getInstance(): PDO
     {
         if (self::$instance === null) {
@@ -36,6 +44,11 @@ class Database
         return self::$instance;
     }
 
+    /**
+     * Load database configuration from the config file.
+     * 
+     * @return array
+     */
     private static function loadConfig(): array
     {
         static $config = null;

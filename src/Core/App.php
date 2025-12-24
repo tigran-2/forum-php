@@ -10,8 +10,13 @@ use Dotenv\Dotenv;
  */
 class App
 {
+    /** @var App|null Singleton instance of the application */
     private static ?App $instance = null;
+
+    /** @var Router The router instance */
     private Router $router;
+
+    /** @var bool Debug mode flag */
     private bool $debug = false;
 
     private function __construct()
@@ -19,6 +24,11 @@ class App
         $this->router = new Router();
     }
 
+    /**
+     * Get the singleton instance of the application.
+     * 
+     * @return self
+     */
     public static function getInstance(): self
     {
         if (self::$instance === null) {
@@ -39,6 +49,9 @@ class App
 
     /**
      * Bootstrap the application.
+     * 
+     * Loads environment variables, sets up error handling, starts the session,
+     * initializes the view engine, and registers core middleware.
      */
     public function boot(): void
     {
@@ -58,6 +71,10 @@ class App
         $this->registerMiddleware();
     }
 
+    /**
+     * Load environment variables from .env file.
+     * Uses vlucas/phpdotenv library.
+     */
     private function loadEnv(): void
     {
         $autoload = dirname(__DIR__, 2) . '/vendor/autoload.php';
@@ -70,6 +87,10 @@ class App
         }
     }
 
+    /**
+     * Set up global error and exception handling.
+     * Converts PHP errors to ErrorException and handles uncaught exceptions.
+     */
     private function setupErrorHandling(): void
     {
         set_exception_handler(function (\Throwable $e) {
@@ -98,6 +119,14 @@ class App
         error_log($e->getMessage() . "\n" . $e->getTraceAsString());
     }
 
+    /**
+     * Register default middleware for the application.
+     * 
+     * - auth: Ensures user is logged in.
+     * - guest: Ensures user is NOT logged in (for login/register pages).
+     * - csrf: Protects POST requests against CSRF attacks.
+     * - rate_limit_login: Limits login attempts to prevent brute force.
+     */
     private function registerMiddleware(): void
     {
         // Auth middleware

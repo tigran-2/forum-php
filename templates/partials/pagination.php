@@ -1,8 +1,12 @@
 <?php
 declare(strict_types=1);
 
-use function App\Core\e;
 use function App\Core\url;
+
+/**
+ * @var array $pagination Pagination data (page, total_pages)
+ * @var string|null $search Search query
+ */
 
 $page = $pagination['page'];
 $totalPages = $pagination['total_pages'];

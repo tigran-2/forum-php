@@ -5,6 +5,14 @@ use function App\Core\e;
 use function App\Core\csrf_field;
 use function App\Core\current_user;
 
+/**
+ * @var array $topic Topic data
+ * @var array $comments List of comments
+ * @var bool $is_owner Is current user the owner
+ * @var string|null $old_comment Previous comment input
+ * @var array $comment_errors Comment validation errors
+ */
+
 $user = current_user();
 ?>
 <div class="grid">

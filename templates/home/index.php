@@ -7,6 +7,12 @@ use function App\Core\current_user;
 use function App\Core\partial;
 
 $user = current_user();
+
+/**
+ * @var array $topics List of topics
+ * @var array $pagination Pagination data
+ * @var string|null $search Search query
+ */
 ?>
 <div class="grid">
   <div class="card">

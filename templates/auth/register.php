@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 use function App\Core\e;
 use function App\Core\csrf_field;
+
+/**
+ * @var array $old Previous input values
+ * @var array $errors Validation errors
+ */
 ?>
 <div class="grid">
   <div class="card">

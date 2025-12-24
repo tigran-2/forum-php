@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 use function App\Core\e;
 use function App\Core\csrf_field;
+
+/**
+ * @var string $old_email Previous email input
+ * @var string|null $error Error message
+ */
 ?>
 <div class="grid">
   <div class="card">

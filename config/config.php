@@ -2,6 +2,11 @@
 // config/config.php
 declare(strict_types=1);
 
+/**
+ * Main configuration file.
+ * Returns an associative array of settings.
+ */
+
 $host = getenv('DB_HOST') ?: '127.0.0.1';
 $port = getenv('DB_PORT') ?: '3306';
 $name = getenv('DB_NAME') ?: 'forum_db';

@@ -20,6 +20,12 @@ class ProfileController
     /**
      * Show user profile.
      */
+    /**
+     * Show user profile.
+     * 
+     * Displays user info and stats (topic count, comment count).
+     * @param string $id User ID
+     */
     public function show(string $id): void
     {
         $userId = Validator::getInt($id, 0, 1);
@@ -44,6 +50,11 @@ class ProfileController
 
     /**
      * Show edit profile form.
+     */
+    /**
+     * Show edit profile form.
+     * 
+     * Loads current user data into the form.
      */
     public function edit(): void
     {
@@ -70,6 +81,12 @@ class ProfileController
 
     /**
      * Update profile.
+     */
+    /**
+     * Update profile.
+     * 
+     * Validates input and updates user record.
+     * Also updates the session user data.
      */
     public function update(): void
     {

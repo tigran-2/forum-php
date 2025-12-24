@@ -8,8 +8,13 @@ namespace App\Core;
  */
 class View
 {
+    /** @var string Path to templates directory */
     private static string $templatesPath = '';
+
+    /** @var string Path to layouts directory */
     private static string $layoutsPath = '';
+
+    /** @var string|null Current layout name (without extension) */
     private static ?string $currentLayout = 'main';
 
     public static function init(string $templatesPath): void
@@ -21,13 +26,23 @@ class View
     /**
      * Set the layout to use (null for no layout).
      */
+    /**
+     * Set the global layout logic to use.
+     * 
+     * @param string|null $layout Layout name (e.g. 'main') or null to disable
+     */
     public static function setLayout(?string $layout): void
     {
         self::$currentLayout = $layout;
     }
 
     /**
-     * Render a template with optional data.
+     * Render a template with optional data and wrap it in a layout.
+     * 
+     * @param string $template Template name (relative to templates path)
+     * @param array $data Variables to pass to the template
+     * @return string Rendered HTML
+     * @throws \RuntimeException If template does not exist
      */
     public static function render(string $template, array $data = []): string
     {
@@ -55,6 +70,12 @@ class View
     /**
      * Render and output a template.
      */
+    /**
+     * Render and immediately echo a template.
+     * 
+     * @param string $template Template name
+     * @param array $data Template variables
+     */
     public static function display(string $template, array $data = []): void
     {
         echo self::render($template, $data);
@@ -74,6 +95,14 @@ class View
         return self::renderFile($templatePath, $data);
     }
 
+    /**
+     * Internal method to render a PHP file.
+     * Uses output buffering and extract() to isolate scope.
+     * 
+     * @param string $path Absolute path to file
+     * @param array $data Variables to extract
+     * @return string Captured output
+     */
     private static function renderFile(string $path, array $data): string
     {
         extract($data, EXTR_SKIP);

@@ -9,8 +9,11 @@ namespace App\Helpers;
 class Messages
 {
     // Auth errors
+    /** @var string Email is required error */
     public const EMAIL_REQUIRED = 'Укажите корректный email.';
+    /** @var string Email already exists error */
     public const EMAIL_EXISTS = 'Этот email уже зарегистрирован.';
+    /** @var string Email and password required error */
     public const EMAIL_PASSWORD_REQUIRED = 'Введите email и пароль.';
     public const INVALID_CREDENTIALS = 'Неверный email или пароль.';
     public const PASSWORD_MIN_LENGTH = 'Пароль должен быть не короче 8 символов.';

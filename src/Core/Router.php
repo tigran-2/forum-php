@@ -8,12 +8,13 @@ namespace App\Core;
  */
 class Router
 {
-    /** @var array<string, array<string, array{handler: callable, middleware: array}>> */
+    /** @var array<string, array<string, array{handler: callable, middleware: array}>> Collection of registered routes */
     private array $routes = [];
 
-    /** @var array<string, callable> */
+    /** @var array<string, callable> Registered middleware handlers */
     private array $middleware = [];
 
+    /** @var string Base path for routing (e.g. /forum) */
     private string $basePath = '';
 
     public function setBasePath(string $basePath): void
@@ -23,6 +24,12 @@ class Router
 
     /**
      * Register middleware.
+     */
+    /**
+     * Register a new middleware.
+     * 
+     * @param string $name Unique name for the middleware
+     * @param callable $handler Function to execute
      */
     public function addMiddleware(string $name, callable $handler): void
     {
@@ -54,6 +61,14 @@ class Router
         $this->addRoute('POST', $path, $handler, $middleware);
     }
 
+    /**
+     * Internal method to register a route.
+     * 
+     * @param string $method HTTP method (GET, POST, etc.)
+     * @param string $path Route path pattern
+     * @param callable $handler Function to execute on match
+     * @param array $middleware List of middleware names to apply
+     */
     private function addRoute(string $method, string $path, callable $handler, array $middleware): void
     {
         $this->routes[$method][$path] = [
@@ -64,6 +79,12 @@ class Router
 
     /**
      * Dispatch the current request.
+     */
+    /**
+     * Dispatch the current request to a matching route handler.
+     * 
+     * Parses the URI, finds a matching route, executes middleware,
+     * and calls the route handler. Sends a 404 response if no match is found.
      */
     public function dispatch(): void
     {
@@ -128,7 +149,11 @@ class Router
 
     /**
      * Match a route path against the current path.
-     * Returns params array on match, null on no match.
+     * Supports named parameters in curly braces, e.g., /topics/{id}.
+     * 
+     * @param string $routePath The defined route path pattern
+     * @param string $currentPath The actual request path
+     * @return array|null Associative array of parameters on success, null on failure
      */
     private function matchPath(string $routePath, string $currentPath): ?array
     {

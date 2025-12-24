@@ -16,6 +16,12 @@ class User
     /**
      * Find user by ID.
      */
+    /**
+     * Find user by ID.
+     * 
+     * @param int $id User ID
+     * @return array|null User data or null if not found
+     */
     public static function find(int $id): ?array
     {
         $pdo = Database::getInstance();
@@ -46,6 +52,16 @@ class User
     /**
      * Create a new user.
      * Returns ['ok' => true] on success or ['ok' => false, 'errors' => [...]] on failure.
+     */
+    /**
+     * Create a new user.
+     * 
+     * Validates input data before creation.
+     * Returns ['ok' => true, 'id' => new_id] on success,
+     * or ['ok' => false, 'errors' => [...]] on failure.
+     * 
+     * @param array $data Input data (email, password, etc.)
+     * @return array Result array
      */
     public static function create(array $data): array
     {
@@ -83,6 +99,15 @@ class User
 
     /**
      * Update user profile.
+     */
+    /**
+     * Update user profile.
+     * 
+     * Validates input (name, phone) before updating.
+     * 
+     * @param int $id User ID
+     * @param array $data Input data to update
+     * @return array Result array ['ok' => bool, 'errors' => array]
      */
     public static function update(int $id, array $data): array
     {

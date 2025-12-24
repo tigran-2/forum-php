@@ -31,6 +31,12 @@ class AuthController
     /**
      * Process login.
      */
+    /**
+     * Process login.
+     * 
+     * Validates input, checks rate limits, verifies credentials,
+     * and sets up the session if successful.
+     */
     public function login(): void
     {
         if (!is_post()) {
@@ -117,6 +123,11 @@ class AuthController
     /**
      * Process registration.
      */
+    /**
+     * Process registration.
+     * 
+     * Validates input, creates a new user, and redirects to login.
+     */
     public function register(): void
     {
         if (!is_post()) {
@@ -159,6 +170,12 @@ class AuthController
 
     /**
      * Process logout.
+     */
+    /**
+     * Process logout.
+     * 
+     * Clears user session and rotates CSRF token.
+     * Requires POST request.
      */
     public function logout(): void
     {

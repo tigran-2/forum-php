@@ -8,8 +8,13 @@ namespace App\Core;
  */
 class Session
 {
+    /** @var bool Flag indicating if the session has been started */
     private static bool $started = false;
 
+    /**
+     * Start the session with secure configurations.
+     * Configures HttpOnly, Secure (if HTTPS), and SameSite attributes.
+     */
     public static function start(): void
     {
         if (self::$started || session_status() === PHP_SESSION_ACTIVE) {
@@ -37,6 +42,7 @@ class Session
     public static function csrfToken(): string
     {
         if (empty($_SESSION['csrf'])) {
+            // Generate a 32-byte random token
             $_SESSION['csrf'] = bin2hex(random_bytes(32));
         }
         return $_SESSION['csrf'];
@@ -44,6 +50,12 @@ class Session
 
     /**
      * Validate CSRF token (for POST requests).
+     */
+    /**
+     * Validate CSRF token from POST request.
+     * Compares the 'csrf' POST field with the session token.
+     * 
+     * @return bool True if valid, false otherwise
      */
     public static function csrfCheck(): bool
     {
@@ -107,8 +119,12 @@ class Session
     }
 
     /**
-     * Check rate limit for an action.
-     * Returns true if allowed, false if rate limited.
+     * Check rate limit for a specific key/action.
+     * 
+     * @param string $key Unique identifier for egg action (e.g. 'login', 'post_comment')
+     * @param int $maxAttempts Maximum allowed attempts within the window
+     * @param int $windowSeconds Time window in seconds
+     * @return bool True if allowed, false if limit exceeded
      */
     public static function checkRateLimit(string $key, int $maxAttempts = 5, int $windowSeconds = 300): bool
     {

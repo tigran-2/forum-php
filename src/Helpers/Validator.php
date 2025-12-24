@@ -14,6 +14,15 @@ class Validator
     /**
      * Normalize phone to +374XXXXXXXX format.
      */
+    /**
+     * Normalize phone to +374XXXXXXXX format.
+     * 
+     * Removes non-numeric characters.
+     * If starts with 374 and length is 11, adds +.
+     * 
+     * @param string $phone Input phone number
+     * @return string Normalized phone number
+     */
     public static function normalizePhone(string $phone): string
     {
         $digits = preg_replace('/\D+/', '', $phone);
@@ -26,6 +35,12 @@ class Validator
     /**
      * Validate Armenian phone format: +374 00 000 000
      */
+    /**
+     * Validate Armenian phone format: +374 00 000 000.
+     * 
+     * @param string $phone Normalized phone number
+     * @return bool True if valid
+     */
     public static function validatePhoneAm(string $phone): bool
     {
         return (bool)preg_match('/^\+374\s?\d{2}\s?\d{3}\s?\d{3}$/', $phone);
@@ -33,6 +48,14 @@ class Validator
 
     /**
      * Validate name (letters, spaces, hyphens, min 2 chars).
+     */
+    /**
+     * Validate name (letters, spaces, hyphens, min 2 chars).
+     * 
+     * Supports unicode letters.
+     * 
+     * @param string $name
+     * @return bool
      */
     public static function validateName(string $name): bool
     {
@@ -45,6 +68,12 @@ class Validator
 
     /**
      * Calculate age from date of birth.
+     */
+    /**
+     * Calculate age from date of birth.
+     * 
+     * @param string $dob Date string YYYY-MM-DD
+     * @return int|null Age in years or null if invalid date
      */
     public static function ageFromDob(string $dob): ?int
     {

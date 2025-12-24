@@ -21,6 +21,12 @@ class CommentController
     /**
      * Edit a comment.
      */
+    /**
+     * Edit a comment.
+     * 
+     * Checks if user is owner of the comment.
+     * @param string $id Comment ID
+     */
     public function edit(string $id): void
     {
         $commentId = Validator::getInt($id, 0, 1);
@@ -48,6 +54,11 @@ class CommentController
 
     /**
      * Update a comment.
+     */
+    /**
+     * Update a comment.
+     * 
+     * @param string $id Comment ID
      */
     public function update(string $id): void
     {
@@ -98,6 +109,11 @@ class CommentController
 
     /**
      * Delete a comment.
+     */
+    /**
+     * Delete a comment.
+     * 
+     * @param string $id Comment ID
      */
     public function delete(string $id): void
     {

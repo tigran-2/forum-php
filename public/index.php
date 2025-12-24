@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 /**
  * Single entry point for the application.
+ * 
+ * - Loads composer autoloader
+ * - Boots application instance
+ * - Defines routes (web.php style)
+ * - Dispatches request
  */
 
 require_once __DIR__ . '/../vendor/autoload.php';

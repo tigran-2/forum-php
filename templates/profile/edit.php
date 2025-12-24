@@ -6,6 +6,12 @@ use function App\Core\csrf_field;
 use function App\Core\current_user;
 
 $user = current_user();
+
+/**
+ * @var array $profile User data
+ * @var array $old Previous input
+ * @var array $errors Validation errors
+ */
 ?>
 <div class="grid">
   <div class="card">

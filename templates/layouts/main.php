@@ -10,6 +10,11 @@ use function App\Core\url;
 
 $user = current_user();
 $flash = flash();
+
+/**
+ * @var string $title Page title
+ * @var string $content Page content to inject
+ */
 ?><!DOCTYPE html>
 <html lang="ru">
 <head>
